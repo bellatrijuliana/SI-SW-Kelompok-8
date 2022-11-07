@@ -1,6 +1,9 @@
 const Prisma = require('prisma/prisma-client');
 /** Instantiate Prisma client */
 const prisma = new Prisma.PrismaClient();
+const userSchema = require('prisma/prisma-client');
+const routes = require('./routes')
+
 const Joi = require('joi')
 const joiMiddleware = require('express-joi-validation').createValidator({})
 /** Required Node.js modules */
@@ -12,8 +15,9 @@ const supplierSchema = Joi.object({
     name: Joi.string().alphanum().min(1).max(191).required(),
     contact: Joi.string().alphanum().min(1).max(191).required(),
     email: Joi.string().email().max(191).required(),
-    phone_num: Joi.string().length(10).pattern(/^[0-9]+$/).required(),
-    address: Joi.string().alphanum().min(1).max(191).required(),
+    incoming_funds: Joi.string().email().max(191).required(),
+    cash_out: Joi.string().email().max(191).required(),
+    description: Joi.string().alphanum().min(1).max(191).required(),
   });
 /** Required Node.js modules */
 const app = Express();
@@ -33,8 +37,6 @@ app.post("/user/create", joiMiddleware.query(userSchema), async (req, res) => {
           name: req.body.name,
           contact: req.body.contact,
           email: req.body.email,
-          phone_num: req.body.phone_num,
-          address: req.body.address,
         }
       });
     /** Send a response telling the user our data has been written */
@@ -76,8 +78,9 @@ app.patch("/user/update", joiMiddleware.query(userSchema), async (req, res) => {
           name: req.body.name,
           contact: req.body.contact,
           email: req.body.email,
-          phone_num: req.body.phone_num,
-          address: req.body.address,
+          incoming_funds: req.body.incoming_funds,
+          cash_out: req_body.cash_out,
+          description:req.body.description,
        }
      });
      /** Send a response telling the user our data has been written */

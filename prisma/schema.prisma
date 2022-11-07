@@ -11,10 +11,11 @@ datasource db {
 }
 
 model User {
-  id        Int    @id @default(autoincrement())
-  name      String @unique
-  contact   String
-  email     String
-  phone_num String
-  address   String
+  id             Int    @id @default(autoincrement())
+  name           String @unique
+  contact        String
+  email          String
+  incoming_funds String
+  cash_out       String
+  description    String
 }
